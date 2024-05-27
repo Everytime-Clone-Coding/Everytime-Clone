@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'mainpages/boardpages/boardscreen.dart';
+import 'mainpages/boardscreen.dart';
 import 'mainpages/chatscreen.dart';
 import 'mainpages/homescreen.dart';
 import 'mainpages/mypagescreen.dart';
-import 'mainpages/timetables/timetablescreen.dart';
-// ignore_for_file: prefer_const_constructors
+import 'mainpages/timetablescreen.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -37,16 +36,16 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _selectedIndex == 0 ? AppBar(
+      appBar: AppBar(
         leading: Image.asset('assets/dku.png'),
-        actions: const [
+        actions: [
           IconButton(icon: Icon(Icons.search), onPressed: null),
         ],
-      ) : null,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xff0a559c),
-        selectedItemColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.blueAccent,
+        selectedItemColor: Colors.deepPurpleAccent,
         unselectedItemColor: Colors.white,
         selectedFontSize: 20,
         unselectedFontSize: 10,

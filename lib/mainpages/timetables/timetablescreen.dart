@@ -1,18 +1,6 @@
+import 'package:everytime/mainpages/timetables/timetableProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../mainpages/timetableProvider.dart';
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const TimeTableScreen(),
-    );
-  }
-}
 
 class TimeTableScreen extends StatefulWidget {
   const TimeTableScreen({super.key});

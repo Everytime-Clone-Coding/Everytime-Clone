@@ -1,6 +1,6 @@
 import 'package:everytime/database_structure/myclass.dart';
-import 'package:everytime/mainpages/timetables/gradeEditScreen.dart';
-import 'package:everytime/mainpages/timetables/timetableList.dart';
+import 'package:everytime/mainpages/timetablepages/gradeEditScreen.dart';
+import 'package:everytime/mainpages/timetablepages/timetableList.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -104,7 +104,6 @@ class _SelectedTimetableState extends State<SelectedTimetable> {
     DataSnapshot snapshot =
         await realtime.ref("timetables").child("semesters").get();
     List<dynamic> semesterList = snapshot.value as List<dynamic>;
-    print('TEST GETDATA!! ' + semesterList.toString());
     return semesterList;
   }
 

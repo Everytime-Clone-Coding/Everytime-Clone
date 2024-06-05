@@ -27,51 +27,83 @@ class TimetableList extends StatelessWidget {
             body: ListView(
               children: [
                 ListTile(
-                  title: Text(
-                    '2024년 1학기',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text('시간표 1',
-                      style: TextStyle(
-                        fontSize: 15,
-                      )),
-                  onTap: () {
-                    Provider.of<TimeTableProvider>(context, listen: false)
-                        .changeTimeTable('2024년 1학기');
-                    Navigator.pop(context);
-                  },
+                title: Text(
+                  "2024년 1학기",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                ListTile(
-                  title: Text(
-                    '2023년 2학기',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text('시간표 1',
-                      style: TextStyle(
-                        fontSize: 15,
-                      )),
-                  onTap: () {
-                    Provider.of<TimeTableProvider>(context, listen: false)
-                        .changeTimeTable('2023년 2학기');
-                    Navigator.pop(context);
-                  },
+                subtitle: Row(
+                  children: [
+                    const Text('시간표 1   ',
+                        style: TextStyle(
+                          fontSize: 15,
+                        )),
+                    "2024년 1학기" ==
+                            Provider.of<TimeTableProvider>(context,
+                                    listen: false)
+                                .selectedTimeTable
+                        ? Text('기본',
+                            style: TextStyle(fontSize: 15, color: Colors.red))
+                        : SizedBox()
+                  ],
                 ),
-                ListTile(
-                  title: Text(
-                    '2023년 1학기',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text('시간표 1',
-                      style: TextStyle(
-                        fontSize: 15,
-                      )),
-                  onTap: () {
-                    Provider.of<TimeTableProvider>(context, listen: false)
-                        .changeTimeTable('2023년 1학기');
-                    Navigator.pop(context);
-                  },
+                onTap: () {
+                  Provider.of<TimeTableProvider>(context, listen: false)
+                      .changeTimeTable("2024년 1학기");
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  "2023년 2학기",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-              ],
-            )));
+                subtitle: Row(
+                  children: [
+                    const Text('시간표 1   ',
+                        style: TextStyle(
+                          fontSize: 15,
+                        )),
+                    "2023년 2학기" ==
+                            Provider.of<TimeTableProvider>(context,
+                                    listen: false)
+                                .selectedTimeTable
+                        ? Text('기본',
+                            style: TextStyle(fontSize: 15, color: Colors.red))
+                        : SizedBox()
+                  ],
+                ),
+                onTap: () {
+                  Provider.of<TimeTableProvider>(context, listen: false)
+                      .changeTimeTable("2023년 2학기");
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  "2023년 1학기",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                subtitle: Row(
+                  children: [
+                    const Text('시간표 1   ',
+                        style: TextStyle(
+                          fontSize: 15,
+                        )),
+                    "2023년 1학기" ==
+                            Provider.of<TimeTableProvider>(context,
+                                    listen: false)
+                                .selectedTimeTable
+                        ? Text('기본',
+                            style: TextStyle(fontSize: 15, color: Colors.red))
+                        : SizedBox()
+                  ],
+                ),
+                onTap: () {
+                  Provider.of<TimeTableProvider>(context, listen: false)
+                      .changeTimeTable("2023년 1학기");
+                  Navigator.pop(context);
+                },
+              ),
+            ])));
   }
 }

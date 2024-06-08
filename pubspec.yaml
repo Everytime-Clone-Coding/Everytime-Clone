@@ -67,7 +67,9 @@ flutter:
   assets:
     - assets/dku.png
     - assets/Character_logo.jpg
-    - assets/profile.png
+    - assets/profile1.png
+    - assets/profile2.png
+    - assets/profile3.png
     - assets/tempGraph.png
 
   # To add assets to your application, add an assets section, like this:

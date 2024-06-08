@@ -1,11 +1,43 @@
+import 'package:everytime/loginpage.dart';
+import 'package:everytime/mainpages/mypages/mypageProvider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'mainpages/boardpages/boardscreen.dart';
-import 'mainpages/chatscreen.dart';
+import 'mainpages/chatpages/chatscreen.dart';
 import 'mainpages/homescreen.dart';
-import 'mainpages/mypagescreen.dart';
-import 'mainpages/timetables/timetablescreen.dart';
+import 'mainpages/mypages/mypagescreen.dart';
+import 'mainpages/timetablepages/timetableProvider.dart';
+import 'mainpages/timetablepages/timetablescreen.dart';
 // ignore_for_file: prefer_const_constructors
+
+// TODO 테스트 코드
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => TimeTableProvider()),
+        ChangeNotifierProvider(create: (context) => MyPageProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: const LoginPage(),
+    );
+  }
+}
+// TODO 테스트 코드 끝
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

@@ -1,4 +1,10 @@
+import 'package:everytime/mainpages/mypages/mydepartmentEditPage.dart';
+import 'package:everytime/mainpages/mypages/mynicknameEditPage.dart';
+import 'package:everytime/mainpages/mypages/myprofileEditPage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'mypageProvider.dart';
 
 // void main() {
 //   runApp(
@@ -31,6 +37,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
     var boxWidth = MediaQuery.of(context).size.width * 0.9;
+    String _department = Provider.of<MyPageProvider>(context).department;
+    String _nickname = Provider.of<MyPageProvider>(context).nickname;
+    String _profile = Provider.of<MyPageProvider>(context).profile;
 
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +68,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                         child: CircleAvatar(
                           radius: 50,
-                          backgroundImage: AssetImage('assets/profile.png'),
+                          backgroundImage: AssetImage("${_profile}"),
                           backgroundColor:
                               profile != null ? Colors.white : Colors.white12,
                         ),
@@ -68,13 +77,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("단곰이",
+                          Text("${_nickname}",
                               style: TextStyle(
                                   color: Colors.black87, fontSize: 18)),
                           Text("김단국",
                               style: TextStyle(
                                   color: Colors.black45, fontSize: 15)),
-                          Text("소프트웨어학과 32999999",
+                          Text("${_department} 32999999",
                               style: TextStyle(
                                   color: Colors.black45, fontSize: 15)),
                         ],
@@ -100,7 +109,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         title: Text("학과 변경",
                             style:
                                 TextStyle(color: Colors.black87, fontSize: 15)),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => MyDepartmentEditScreen()));
+                        },
                       ),
                       ListTile(
                         title: Text("비밀번호 변경",
@@ -132,16 +144,22 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               fontSize: 22,
                               fontWeight: FontWeight.bold)),
                       ListTile(
-                        title: Text("닉네임 설정",
+                        title: Text("닉네임 변경",
                             style:
                                 TextStyle(color: Colors.black87, fontSize: 15)),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => MyNicknameEditPage()));
+                        },
                       ),
                       ListTile(
                         title: Text("프로필 이미지 변경",
                             style:
                                 TextStyle(color: Colors.black87, fontSize: 15)),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => MyProfileEditPage()));
+                        },
                       ),
                     ],
                   )),

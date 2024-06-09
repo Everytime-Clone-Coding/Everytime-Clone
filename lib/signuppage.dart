@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'loginpage.dart';
 // ignore_for_file: prefer_const_constructors
 
 class SignUpPage extends StatefulWidget {
@@ -27,6 +28,13 @@ class _SignUpPageState extends State<SignUpPage> {
         await userCredential.user!.sendEmailVerification();
         setState(() {
           _statusMessage = '인증 이메일이 발송되었습니다. 이메일을 확인해주세요.';
+          Future.delayed(Duration(seconds: 2), ()
+          {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()),
+            );
+          });
         });
       }
     } on FirebaseAuthException catch (e) {

@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // ignore_for_file: prefer_const_constructors
-
 import 'mainpage.dart';
 
 class LoginPage extends StatefulWidget {

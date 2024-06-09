@@ -1,19 +1,13 @@
 import 'package:everytime/mainpages/mypages/mydepartmentEditPage.dart';
 import 'package:everytime/mainpages/mypages/mynicknameEditPage.dart';
 import 'package:everytime/mainpages/mypages/myprofileEditPage.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../loginpage.dart';
 import 'mypageProvider.dart';
-
-// void main() {
-//   runApp(
-//     ChangeNotifierProvider(
-//       create: (context) => MyPageProvider(),
-//       child: MyApp(),
-//     ),
-//   );
-// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -56,7 +50,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
             children: <Widget>[
               Container(
                   width: boxWidth,
-                  margin: EdgeInsets.all(20),
+                  margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.black12, width: 2)),
@@ -90,9 +84,11 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       )
                     ],
                   )),
+              SizedBox(
+                height: 15,
+              ),
               Container(
                   width: boxWidth,
-                  margin: EdgeInsets.all(15),
                   padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -128,9 +124,11 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       ),
                     ],
                   )),
+              SizedBox(
+                height: 15,
+              ),
               Container(
                   width: boxWidth,
-                  margin: EdgeInsets.all(15),
                   padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -163,16 +161,42 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       ),
                     ],
                   )),
+              SizedBox(
+                height: 15,
+              ),
               Container(
                 width: boxWidth,
-                margin: EdgeInsets.all(15),
                 padding: EdgeInsets.all(7),
                 decoration: BoxDecoration(color: Colors.red),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    await _signOut(context);
+                  },
                   child: Center(
                     child: Text(
-                      "회원 탈퇴",
+                      "로그아웃",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                width: boxWidth,
+                padding: EdgeInsets.all(7),
+                decoration: BoxDecoration(color: Colors.red),
+                child: InkWell(
+                  onTap: () async {
+                    await _deleteId(context);
+                  },
+                  child: Center(
+                    child: Text(
+                      "회원탈퇴",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -186,5 +210,58 @@ class _MyPageScreenState extends State<MyPageScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', false);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("로그아웃 중 오류가 발생했습니다."),
+        ),
+      );
+    }
+  }
+
+  Future<void> _deleteId(BuildContext context) async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      try {
+        await _deleteUserFromDatabase(user);
+        await user.delete();
+        await FirebaseAuth.instance.signOut();
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('회원탈퇴 완료')),
+        ).closed.then((SnackBarClosedReason reason) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
+        });
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('회원탈퇴 중 오류가 발생했습니다.')),
+        );
+      }
+    }
+  }
+
+  Future<void> _deleteUserFromDatabase(User user) async {
+    DatabaseReference usersRef = FirebaseDatabase.instance.ref().child('users');
+    try {
+      await usersRef.child(user.uid).remove();
+    } catch (error) {
+      print('Error deleting user from database: $error');
+    }
   }
 }

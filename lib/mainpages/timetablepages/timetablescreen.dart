@@ -4,17 +4,7 @@ import 'package:everytime/mainpages/timetablepages/timetableList.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'timetableProvider.dart';
-
-// void main() {
-//   runApp(
-//     ChangeNotifierProvider(
-//       create: (context) => TimeTableProvider(),
-//       child: MyApp(),
-//     ),
-//   );
-// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
